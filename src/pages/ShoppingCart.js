@@ -51,12 +51,25 @@ export default function ShoppingCart() {
 
   const handleQuantityChange = (quantity, itemId) => {
     //TODO: mutation 함수를 호출하여 정보를 업데이트 하세요.
+    const findItem = cartItems.find((cartItem) => cartItem.itemId === itemId)
+    updateCartItemsMutation.mutate({ id : findItem.id, itemId: itemId, quantity : quantity})
   }
 
   const handleDelete = (itemId) => {
     setCheckedItems(checkedItems.filter((el) => el !== itemId))
-
     //TODO: mutation 함수를 호출하여 항목을 삭제 하세요.
+    // const filterItem = cartItems.filter((el)=> el.itemId === itemId)
+    const findItem = cartItems.find((el)=> el.itemId === itemId)
+    // onSucces: () => {
+    //   deleteCartItemsMutation.mutate(findItem.id)
+    // }
+    if(findItem) {
+      deleteCartItemsMutation.mutate(findItem.id)
+      console.log(findItem.id)
+      console.log(cartItems)
+      console.log(itemId)
+    }
+    else {console.log ("itemId not in cartItems")}
   }
 
   const getTotal = () => {

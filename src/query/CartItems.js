@@ -21,6 +21,8 @@ const fetchCartItems = async () => {
  */
 export const useCartItems = () => {
   // 쿼리 명칭은 중복 되어서는 안됩니다.
+  // useQuery로 데이터 관리하겠습니다!
+  // 조회만 useQurery를 사용한다.
   return useQuery("cartItems", fetchCartItems);
 };
 
@@ -30,6 +32,8 @@ export const useCartItems = () => {
  * @param {*} newData 
  * @returns 
  */
+// 서버에서 추가 관리
+
 const addCartItems = async (newData) => {
   try {
     const response = await axios.post(`http://localhost:5001/cartItems`, newData, {
@@ -49,6 +53,7 @@ const addCartItems = async (newData) => {
  */
 export const useAddCartItem = () => {
   const queryClient = useQueryClient(); // 이 줄 추가
+  // useMutation에서 addCartItems를 콜백함수를 사용함.
   return useMutation(addCartItems, {
     onSuccess: () => {
       // 해당 query key에 해당하는 데이터를 refetch
